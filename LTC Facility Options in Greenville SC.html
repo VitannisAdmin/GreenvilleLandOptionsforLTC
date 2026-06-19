@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site Selection: Long-Term Care Facility</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.15);
+        }
+        .suitability-high { background-color: #dcfce7; color: #166534; }
+        .suitability-medium { background-color: #fef08a; color: #854d0e; }
+        .suitability-low { background-color: #fee2e2; color: #991b1b; }
+        .suitability-pending { background-color: #e2e8f0; color: #475569; }
+    </style>
+</head>
+<body class="text-slate-800 antialiased">
+
+    <!-- Header / Hero Section -->
+    <header class="bg-slate-900 text-white pt-16 pb-20 px-6 sm:px-12 lg:px-24">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex items-center gap-3 mb-4 text-emerald-400">
+                <i data-lucide="building-2" class="w-8 h-8"></i>
+                <span class="font-semibold tracking-wider uppercase text-sm">Site Selection Report</span>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-bold mb-6 leading-tight">Greenville, SC: Vacant Land Options <br/><span class="text-slate-400">for Long-Term Care Development</span></h1>
+            <p class="text-lg text-slate-300 max-w-3xl leading-relaxed">
+                An analysis of currently available vacant lots in the Greenville and Travelers Rest markets. Properties have been evaluated on their baseline suitability for a long-term care facility, factoring in acreage, zoning constraints, and submarket demographics.
+            </p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-6 sm:px-12 lg:px-24 -mt-10 pb-20">
+        
+        <!-- Controls -->
+        <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 mb-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="text-sm text-slate-500">
+                Showing <strong id="property-count" class="text-slate-900">0</strong> available properties
+            </div>
+            <div class="flex gap-2">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium suitability-high">
+                    <span class="w-2 h-2 rounded-full bg-green-600"></span> High Suitability
+                </span>
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium suitability-medium">
+                    <span class="w-2 h-2 rounded-full bg-yellow-500"></span> Medium Suitability
+                </span>
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium suitability-low">
+                    <span class="w-2 h-2 rounded-full bg-red-600"></span> Low Suitability
+                </span>
+            </div>
+        </div>
+
+        <!-- Property Grid -->
+        <div id="property-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+            <!-- JavaScript will inject cards here -->
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-12 text-center">
+        <p class="text-sm">Prepared for Long-Term Care Development Planning</p>
+    </footer>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Property Data containing all user revisions
+        const properties = [
+            {
+                address: "800 S Pleasantburg Dr, Greenville, SC",
+                zip: "29607",
+                price: "$450,000",
+                acres: "2.50 AC",
+                zoning: "OD (Office District)",
+                source: "LoopNet",
+                url: "https://www.loopnet.com/Listing/800-S-Pleasantburg-Dr-Greenville-SC/39292657/",
+                suitability: "High",
+                suitabilityClass: "suitability-high",
+                notes: "Excellent visibility on a major traffic corridor. 2.5 acres is an ideal footprint for a multi-story care facility. Office District zoning is highly favorable for medical uses."
+            },
+            {
+                address: "1235 Rutherford Rd, Greenville, SC",
+                zip: "29609",
+                price: "$425,000",
+                acres: "0.87 AC",
+                zoning: "S-1 (Commercial)",
+                source: "LoopNet",
+                url: "https://www.loopnet.com/Listing/1235-Rutherford-Rd-Greenville-SC/37353816/",
+                suitability: "Low",
+                suitabilityClass: "suitability-low",
+                notes: "At under 1 acre, the footprint is extremely tight for a standard long-term care facility once parking, stormwater, and setbacks are factored in. <strong>Better suited for a boutique care home.</strong>"
+            },
+            {
+                address: "51 Donkle Rd, Greenville, SC",
+                zip: "29609",
+                price: "$900,000",
+                acres: "6.70 AC",
+                zoning: "I-1 (Industrial)",
+                source: "LoopNet",
+                url: "https://www.loopnet.com/Listing/51-Donkle-Rd-Greenville-SC/38321731/",
+                suitability: "Medium",
+                suitabilityClass: "suitability-medium",
+                notes: "Great acreage (6.7 acres) allows for a substantial campus with ample parking. However, the current I-1 Industrial zoning poses a hurdle and would likely require rezoning."
+            },
+            {
+                address: "47 Pelham Davis Cir, Greenville, SC",
+                zip: "29615",
+                price: "$210,000",
+                acres: "3.37 AC",
+                zoning: "Commercial",
+                source: "Crexi",
+                url: "https://www.crexi.com/properties/2414920/Greenville-SC-29615",
+                suitability: "High",
+                suitabilityClass: "suitability-high",
+                notes: "Outstanding value at $210,000 for 3.37 acres. Located in a highly desirable zip code near major hospitals and a premium medical corridor, making it an excellent candidate."
+            },
+            {
+                address: "3485 N Hwy 25 Bypass, Travelers Rest, SC",
+                zip: "29690",
+                price: "$525,000",
+                acres: "3.90 AC",
+                zoning: "S-1",
+                source: "Crexi",
+                url: "https://www.crexi.com/properties/2241531/Travelers-Rest-SC-29690",
+                suitability: "High",
+                suitabilityClass: "suitability-high",
+                notes: "Travelers Rest is a rapidly growing suburb. 3.9 acres with S-1 zoning at this price point provides excellent flexibility for development in a scenic environment for seniors."
+            },
+            {
+                address: "W Blue Ridge Dr & Crane Ave, Greenville, SC",
+                zip: "29617",
+                price: "$550,000",
+                acres: "7.25 AC",
+                zoning: "S-1",
+                source: "Crexi",
+                url: "https://www.crexi.com/properties/1056379/Parker-SC-29617",
+                suitability: "High",
+                suitabilityClass: "suitability-high",
+                notes: "Exceptional acreage for the price. 7.25 acres with S-1 zoning offers massive potential for a sprawling, single-story care facility in an up-and-coming submarket."
+            },
+            {
+                address: "1091 Park W Blvd, Greenville, SC",
+                zip: "29611",
+                price: "$800,000",
+                acres: "4.50 AC",
+                zoning: "Commercial",
+                source: "Crexi",
+                url: "https://www.crexi.com/properties/2445653/Greenville-SC-29611",
+                suitability: "High",
+                suitabilityClass: "suitability-high",
+                notes: "Close proximity to St. Francis Downtown and the revitalizing West End. 4.5 acres with commercial zoning is a very strong option, offering urban convenience to families."
+            },
+            {
+                address: "1136 Old Buncombe Rd, Greenville, SC",
+                zip: "29617",
+                price: "$1,985,000",
+                acres: "8.00 AC",
+                zoning: "S-1",
+                source: "Crexi",
+                url: "https://www.crexi.com/properties/2515000/Greenville-SC-29617",
+                suitability: "High",
+                suitabilityClass: "suitability-high",
+                notes: "An expansive 8-acre site offering substantial room for a premier, large-scale facility or Continuing Care Retirement Community (CCRC). S-1 zoning provides excellent flexibility."
+            },
+            {
+                address: "198 Crestwood Dr, Greenville, SC",
+                zip: "29609",
+                price: "$899,000",
+                acres: "17.03 AC",
+                zoning: "R-15",
+                source: "Crexi",
+                url: "https://www.crexi.com/properties/779305/Greenville-SC-29609",
+                suitability: "High",
+                suitabilityClass: "suitability-high",
+                notes: "Massive 17-acre parcel ideal for a sprawling CCRC with independent living, assisted living, and memory care. R-15 zoning may require a special exception but offers a tranquil setting."
+            },
+            {
+                address: "Woods Lake Rd, Greenville, SC",
+                zip: "29607",
+                price: "$525,000",
+                acres: "2.94 AC",
+                zoning: "C-3",
+                source: "Crexi",
+                url: "https://www.crexi.com/properties/715530/Greenville-SC-29607",
+                suitability: "High",
+                suitabilityClass: "suitability-high",
+                notes: "Excellent central location off Woods Lake Rd in the 29607 zip code. C-3 zoning is highly favorable for commercial facilities, and 2.94 acres provides a solid footprint for a multi-story development at an attractive price point."
+            }
+        ];
+
+        // Update the top counter
+        document.getElementById('property-count').textContent = properties.length;
+
+        // Render Cards
+        const grid = document.getElementById('property-grid');
+
+        properties.forEach(prop => {
+            const card = document.createElement('div');
+            card.className = "bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden flex flex-col card-hover relative";
+            
+            // Source Badge positioning
+            const sourceBadgeColor = prop.source === 'LoopNet' ? 'bg-red-600' : 'bg-blue-600';
+
+            card.innerHTML = `
+                <!-- Top Accent & Source -->
+                <div class="h-2 w-full ${sourceBadgeColor}"></div>
+                <div class="absolute top-4 right-4 bg-white border border-slate-100 shadow-sm text-xs font-bold px-2 py-1 rounded text-slate-600 uppercase tracking-wide z-10">
+                    ${prop.source}
+                </div>
+
+                <div class="p-6 flex-grow flex flex-col">
+                    <!-- Title & Location -->
+                    <div class="mb-4 pr-16">
+                        <h2 class="text-xl font-bold text-slate-900 leading-tight mb-1">${prop.address}</h2>
+                        <div class="flex items-center text-slate-500 text-sm gap-1">
+                            <i data-lucide="map-pin" class="w-4 h-4"></i>
+                            <span>Greenville Area (Zip: ${prop.zip})</span>
+                        </div>
+                    </div>
+
+                    <!-- Key Stats -->
+                    <div class="grid grid-cols-2 gap-4 mb-6 bg-slate-50 p-4 rounded-xl border border-slate-100">
+                        <div>
+                            <p class="text-xs text-slate-500 uppercase tracking-wider font-semibold mb-1">Asking Price</p>
+                            <p class="font-bold text-slate-900">${prop.price}</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-500 uppercase tracking-wider font-semibold mb-1">Lot Size</p>
+                            <p class="font-bold text-slate-900">${prop.acres}</p>
+                        </div>
+                        <div class="col-span-2">
+                            <p class="text-xs text-slate-500 uppercase tracking-wider font-semibold mb-1">Zoning</p>
+                            <p class="font-medium text-slate-700">${prop.zoning}</p>
+                        </div>
+                    </div>
+
+                    <!-- Suitability Analysis -->
+                    <div class="mb-6 flex-grow">
+                        <div class="flex items-center gap-2 mb-2">
+                            <h3 class="text-sm font-bold text-slate-900">LTC Suitability:</h3>
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${prop.suitabilityClass}">
+                                ${prop.suitability}
+                            </span>
+                        </div>
+                        <p class="text-sm text-slate-600 leading-relaxed">${prop.notes}</p>
+                    </div>
+
+                    <!-- Action Button -->
+                    <a href="${prop.url}" target="_blank" class="mt-auto block w-full text-center bg-white border-2 border-slate-900 text-slate-900 font-semibold py-3 rounded-xl hover:bg-slate-900 hover:text-white transition-colors duration-200">
+                        View Original Listing
+                    </a>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+
+        // Re-initialize icons for dynamically added content
+        lucide.createIcons();
+    </script>
+</body>
+</html>
